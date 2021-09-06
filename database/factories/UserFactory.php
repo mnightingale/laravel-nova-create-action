@@ -44,4 +44,13 @@ class UserFactory extends Factory
             ];
         });
     }
+
+    public function staff()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'is_staff' => true,
+            ];
+        });
+    }
 }
