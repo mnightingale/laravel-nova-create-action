@@ -11,6 +11,6 @@ class Customer extends Model
 
     public function users()
     {
-        return $this->hasMany(\App\Models\User::class);
+        return $this->hasMany(\App\Models\CustomerUser::class);
     }
 }

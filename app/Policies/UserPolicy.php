@@ -3,9 +3,7 @@
 namespace App\Policies;
 
 use App\Models\User;
-use App\Nova\Customer;
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Laravel\Nova\Http\Requests\NovaRequest;
 
 class UserPolicy
 {
@@ -19,7 +17,7 @@ class UserPolicy
      */
     public function viewAny(User $user)
     {
-        return true;
+        return $user->isStaff();
     }
 
     /**
@@ -31,7 +29,7 @@ class UserPolicy
      */
     public function view(User $user, User $model)
     {
-        return true;
+        return $user->isStaff();
     }
 
     /**
@@ -42,30 +40,7 @@ class UserPolicy
      */
     public function create(User $user)
     {
-        return \Nova::whenServing(function (NovaRequest $request) use ($user) {
-                \Log::info($request->url(), [
-                    'resource'                  => $request->route('resource'),
-                    'isCreateOrAttachRequest()' => $request->isCreateOrAttachRequest(),
-                    'viaRelationship()'         => $request->viaRelationship(),
-                    'viaResource()'             => $request->viaResource(),
-                ]);
-
-                if ($request->viaRelationship() && $request->viaResource() === Customer::class) {
-                    return true;
-                }
-
-                return !$user->is_staff && $request->route('resource') === 'users';
-            }) ?? (function () {
-                // Initial load of /resources/users is not a NovaRequest but clicking the button causes 403 because that is a NovaRequest.
-                return true;
-
-//                // This doesn't work properly, caused the button to appear/disappear inconsistently on login, refresh and navigation
-//                if (Str::startsWith(Route::current()->parameter('view'), 'resources/customers')) {
-//                    return true;
-//                }
-//
-//                return false;
-            })();
+        return false;
     }
 
     /**
@@ -77,7 +52,7 @@ class UserPolicy
      */
     public function update(User $user, User $model)
     {
-        return true;
+        return $user->isStaff();
     }
 
     /**
@@ -89,7 +64,7 @@ class UserPolicy
      */
     public function delete(User $user, User $model)
     {
-        return true;
+        return $user->isStaff();
     }
 
     /**
@@ -101,7 +76,7 @@ class UserPolicy
      */
     public function restore(User $user, User $model)
     {
-        return true;
+        return $user->isStaff();
     }
 
     /**
@@ -113,6 +88,6 @@ class UserPolicy
      */
     public function forceDelete(User $user, User $model)
     {
-        return true;
+        return $user->isStaff();
     }
 }

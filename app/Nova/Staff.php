@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use Illuminate\Http\Request;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Staff extends User
@@ -16,5 +17,15 @@ class Staff extends User
     public static function indexQuery(NovaRequest $request, $query)
     {
         return $query->where('is_staff', true);
+    }
+
+    public static function availableForNavigation(Request $request)
+    {
+        return true;
+    }
+
+    public static function label()
+    {
+        return 'Staff';
     }
 }

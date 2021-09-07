@@ -48,7 +48,7 @@ class Customer extends Resource
                 ->sortable()
                 ->rules('required', 'max:255'),
 
-            HasMany::make('Users'),
+            HasMany::make('Users', 'users', CustomerUser::class),
         ];
     }
 

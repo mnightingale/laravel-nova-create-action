@@ -51,6 +51,16 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'is_admin'          => 'boolean',
+        'is_staff'          => 'boolean',
     ];
+
+    public function isStaff(): bool
+    {
+        return $this->is_staff;
+    }
+
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class);
+    }
 }

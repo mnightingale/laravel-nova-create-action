@@ -18,7 +18,7 @@ class CustomerPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->is_staff;
+        return $user->isStaff();
     }
 
     /**
@@ -30,7 +30,7 @@ class CustomerPolicy
      */
     public function view(User $user, Customer $customer)
     {
-        return $user->is_staff;
+        return $user->isStaff();
     }
 
     /**
@@ -41,7 +41,7 @@ class CustomerPolicy
      */
     public function create(User $user)
     {
-        return $user->is_staff;
+        return $user->isStaff();
     }
 
     /**
@@ -53,7 +53,7 @@ class CustomerPolicy
      */
     public function update(User $user, Customer $customer)
     {
-        return $user->is_staff;
+        return $user->isStaff();
     }
 
     /**
@@ -65,7 +65,7 @@ class CustomerPolicy
      */
     public function delete(User $user, Customer $customer)
     {
-        return $user->is_staff;
+        return $user->isStaff();
     }
 
     /**
@@ -77,7 +77,7 @@ class CustomerPolicy
      */
     public function restore(User $user, Customer $customer)
     {
-        return $user->is_staff;
+        return $user->isStaff();
     }
 
     /**
@@ -89,11 +89,11 @@ class CustomerPolicy
      */
     public function forceDelete(User $user, Customer $customer)
     {
-        return $user->is_staff;
+        return $user->isStaff();
     }
 
     public function addUser(User $user, Customer $customer)
     {
-        return true;
+        return $user->isStaff();
     }
 }
